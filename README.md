@@ -12,6 +12,9 @@
 
 - pfSense
 - Kali Linux
+- Ubuntu Server
+- Docker
+- Portainer
 
 ## Steps
 
@@ -53,6 +56,8 @@ Enable DHCP server on each interface. Specify pool range and add DNS
 
 ![image](https://github.com/user-attachments/assets/2385db1b-123d-4c82-a62e-fe137d292a7f)
 
+## Configuring Docker and Portainer on ubuntu server
+
 Install Docker on ubuntu server
 
 ![image](https://github.com/user-attachments/assets/bad0b8cf-373f-4084-afac-00755f17a396)
@@ -65,7 +70,15 @@ Install Portainer on ubuntu server
 
 ![image](https://github.com/user-attachments/assets/49fa2cfe-7622-4808-b8c5-5d1fb9310c8f)
 
+## Configure Macvlan in Portainer 
 
+Under add network under networks tab. Configure VLAN30 config, add new network and select creation 
 
+![image](https://github.com/user-attachments/assets/e958b277-042c-466e-865b-f550e40d355d)
 
+![image](https://github.com/user-attachments/assets/f4499eec-4c36-40c5-9942-3c5463fcb4bc)
+
+Create containers for bwapp, dvwa and web-goat making sure network is under `vlan30` and deploy.
+
+![image](https://github.com/user-attachments/assets/f892c6b4-e9a6-440d-8006-ab2bd3b139bb)
 
