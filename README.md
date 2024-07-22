@@ -15,6 +15,9 @@
 - Ubuntu Server
 - Docker
 - Portainer
+- bwapp
+- dvwa
+- webgoat
 
 ## Steps
 
@@ -81,4 +84,9 @@ Under add network under networks tab. Configure VLAN30 config, add new network a
 Create containers for bwapp, dvwa and web-goat making sure network is under `vlan30` and deploy.
 
 ![image](https://github.com/user-attachments/assets/f892c6b4-e9a6-440d-8006-ab2bd3b139bb)
+
+## Wazuh
+
+Install wazuh
+`curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a`
 
