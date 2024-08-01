@@ -18,6 +18,8 @@
 - bwapp
 - dvwa
 - webgoat
+- Wazuh
+- Nessus
 
 ## Steps
 
@@ -31,11 +33,9 @@ add firewall rules for vlans for internet and vlan communication
 DHCP for different networks
 
 Create VLAN interfaces
-
 ![image](https://github.com/user-attachments/assets/0fc2b8b5-5b32-4684-bb15-b30fee783971)
 
 Assign VLAN to LAN interface
-
 ![image](https://github.com/user-attachments/assets/0bd11398-7d59-4c53-826c-5a148f68a714)
 
 Configure VLAN interfaces
@@ -67,8 +67,7 @@ Install Docker on ubuntu server
 
 Install Portainer on ubuntu server
 
-`sudo docker volume create portainer_data`
-
+`sudo docker volume create portainer_data`  
 `sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest`
 
 ![image](https://github.com/user-attachments/assets/49fa2cfe-7622-4808-b8c5-5d1fb9310c8f)
@@ -87,6 +86,47 @@ Create containers for bwapp, dvwa and web-goat making sure network is under `vla
 
 ## Wazuh
 
-Install wazuh
-`curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a`
+Using an Ubuntu Server, install Wazuh using  
+`curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a`  
+Login using provided password and access the web page to confirm installation.  
+![image](https://github.com/user-attachments/assets/b5aaca03-e0a5-430c-80c3-3fdb3277564f)
+
+
+Deploying Wazuh agents on Linux endpoints.
+
+Add the Wazuh repository
+
+1. Install the GPG key: `curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg`
+2. Add the repository:`echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list`
+3. Update the package information:`apt-get update`
+  
+![image](https://github.com/user-attachments/assets/5de7517b-fe19-48b6-90f3-930927fb27b8)
+
+
+Deploy a Wazuh agent on endpoint.  
+`WAZUH_MANAGER="<IP>" apt-get install wazuh-agent`
+
+Enable and start the Wazuh agent service.  
+`systemctl daemon-reload`  
+`systemctl enable wazuh-agent`  
+`systemctl start wazuh-agent`  
+![image](https://github.com/user-attachments/assets/b66f974d-5034-428f-aa6e-ed8bc076a87d)
+
+Confirm agent status on Wazuh web interface.
+![image](https://github.com/user-attachments/assets/37046bf6-bd74-4817-8892-157ced63974d)
+
+Enable the Wazuh Docker listener to capture Docker events and forward them to the Wazuh server.  
+[Using Wazuh to monitor Docker](https://documentation.wazuh.com/current/user-manual/capabilities/container-security/monitoring-docker.html#enable-wazuh-docker-listener)
+
+`pip3 install docker==7.1.0 urllib3==2.2.2 requests==2.32.2`
+
+Add the following configuration to the Wazuh agent configuration file /var/ossec/etc/ossec.conf to enable the Docker listener: 
+
+```
+<wodle name="docker-listener">
+  <disabled>no</disabled>
+</wodle>
+```
+
+Restart the Wazuh agent to apply the changes: `systemctl restart wazuh-agent`
 
