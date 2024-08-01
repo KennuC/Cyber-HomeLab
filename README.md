@@ -87,10 +87,9 @@ Create containers for bwapp, dvwa and web-goat making sure network is under `vla
 ## Wazuh
 
 Using an Ubuntu Server, install Wazuh using  
-`curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a`  
+`curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a`
 Login using provided password and access the web page to confirm installation.  
-![image](https://github.com/user-attachments/assets/b5aaca03-e0a5-430c-80c3-3fdb3277564f)
-
+![image](https://github.com/user-attachments/assets/c06bbbb7-5c4c-449e-906d-e4e9433d2368)
 
 Deploying Wazuh agents on Linux endpoints.
 
@@ -113,12 +112,12 @@ Enable and start the Wazuh agent service.
 ![image](https://github.com/user-attachments/assets/b66f974d-5034-428f-aa6e-ed8bc076a87d)
 
 Confirm agent status on Wazuh web interface.
-![image](https://github.com/user-attachments/assets/37046bf6-bd74-4817-8892-157ced63974d)
+![image](https://github.com/user-attachments/assets/8f4b238e-069f-4a4c-bf00-8596c7c8dbde)
 
-Enable the Wazuh Docker listener to capture Docker events and forward them to the Wazuh server.  
-[Using Wazuh to monitor Docker](https://documentation.wazuh.com/current/user-manual/capabilities/container-security/monitoring-docker.html#enable-wazuh-docker-listener)
-
-`pip3 install docker==7.1.0 urllib3==2.2.2 requests==2.32.2`
+Enable the Wazuh Docker listener to capture Docker events and forward them to the Wazuh server.    
+`apt-get update && apt-get install python3`  
+`apt-get install python3-pip`  
+`pip3 install docker==4.2.0 urllib3==1.26.18`
 
 Add the following configuration to the Wazuh agent configuration file /var/ossec/etc/ossec.conf to enable the Docker listener: 
 
@@ -129,4 +128,12 @@ Add the following configuration to the Wazuh agent configuration file /var/ossec
 ```
 
 Restart the Wazuh agent to apply the changes: `systemctl restart wazuh-agent`
+
+Enable Wazuh Docker listener on dashboard  
+![image](https://github.com/user-attachments/assets/1f5bc3e4-1011-4bc5-99aa-2c9d34e74df6)
+
+Wazuh pfsense agent
+
+Enable SSH in Settings > Advanced > Secure Shell > Enable Secure Shell
+
 
