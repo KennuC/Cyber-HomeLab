@@ -20,6 +20,8 @@
 - webgoat
 - Wazuh
 - Nessus
+- Caldera
+- Security Onion
 
 ## Steps
 
@@ -135,5 +137,15 @@ Enable Wazuh Docker listener on dashboard
 Wazuh pfsense agent
 
 Enable SSH in Settings > Advanced > Secure Shell > Enable Secure Shell
+
+## Nessus Scan
+
+Performing basic Host Discovery on Metasploitable2
+
+![image](https://github.com/user-attachments/assets/740a6a64-bc91-46ee-8aea-b104a789d3cf)  
+![image](https://github.com/user-attachments/assets/f49fa3ef-6daf-4090-8282-df16ba22fe09)
+![image](https://github.com/user-attachments/assets/24806e03-e0a3-462b-9289-1021d3d30b0d)
+
+
 
 
