@@ -22,6 +22,10 @@
 - Nessus
 - Caldera
 - Security Onion
+- Windows Server 2022
+- Windows 10
+- The Hive
+- Cortex
 
 ## Steps
 
