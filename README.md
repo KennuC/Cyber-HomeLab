@@ -32,6 +32,9 @@
 
 ## Network Diagram
 
+![HomeLab drawio (3)](https://github.com/user-attachments/assets/bf878df6-e5e0-4935-9d7c-e012a1d8a11d)
+
+
 ## Configuring pfSense
 
 Create additional networks and vlans
