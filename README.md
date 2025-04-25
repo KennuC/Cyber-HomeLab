@@ -1,12 +1,8 @@
-# PROJECTNAME
+# Cyber HomeLab
 
 ## Objective
 
-
-
 ### Skills Learned
-
-- 
 
 ### Tools Used
 
@@ -26,9 +22,6 @@
 - Windows 10
 - The Hive
 - Cortex
-
-## Steps
-
 
 ## Network Diagram
 
