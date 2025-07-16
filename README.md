@@ -6,6 +6,7 @@
 
 ### Tools Used
 
+- Proxmox
 - pfSense
 - Kali Linux
 - Ubuntu Server
@@ -27,125 +28,57 @@
 
 ![HomeLab drawio (3)](https://github.com/user-attachments/assets/bf878df6-e5e0-4935-9d7c-e012a1d8a11d)
 
-
-## Configuring pfSense
-
-Create additional networks and vlans
-add firewall rules for vlans for internet and vlan communication
-DHCP for different networks
-
-Create VLAN interfaces
-![image](https://github.com/user-attachments/assets/0fc2b8b5-5b32-4684-bb15-b30fee783971)
-
-Assign VLAN to LAN interface
-![image](https://github.com/user-attachments/assets/0bd11398-7d59-4c53-826c-5a148f68a714)
-
-Configure VLAN interfaces
-
-VLAN10
-![image](https://github.com/user-attachments/assets/69332e4b-345e-49c1-9a5e-87e16cf6905d)
-
-VLAN20
-![image](https://github.com/user-attachments/assets/93b3c940-4b2e-461a-8de2-345a86c56ba5)
-
-VLAN30
-![image](https://github.com/user-attachments/assets/62c8dec0-53b7-445e-b0ff-4de2fb6100b5)
-
-Copy firewall rule of allow LAN to any from LAN to VLAN10,20,30. Also change source to appropriate subnet
-
-![image](https://github.com/user-attachments/assets/af0c7608-9dc7-4885-9a24-7f9e6d32409d)
-
-![image](https://github.com/user-attachments/assets/1c027a61-415b-44cd-9336-c8e026db58dc)
-
-Enable DHCP server on each interface. Specify pool range and add DNS
-
-![image](https://github.com/user-attachments/assets/2385db1b-123d-4c82-a62e-fe137d292a7f)
-
-## Configuring Docker and Portainer on ubuntu server
-
-Install Docker on ubuntu server
-
-![image](https://github.com/user-attachments/assets/bad0b8cf-373f-4084-afac-00755f17a396)
-
-Install Portainer on ubuntu server
-
-`sudo docker volume create portainer_data`  
-`sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest`
-
-![image](https://github.com/user-attachments/assets/49fa2cfe-7622-4808-b8c5-5d1fb9310c8f)
-
-## Configure Macvlan in Portainer 
-
-Under add network under networks tab. Configure VLAN30 config, add new network and select creation 
-
-![image](https://github.com/user-attachments/assets/e958b277-042c-466e-865b-f550e40d355d)
-
-![image](https://github.com/user-attachments/assets/f4499eec-4c36-40c5-9942-3c5463fcb4bc)
-
-Create containers for bwapp, dvwa and web-goat making sure network is under `vlan30` and deploy.
-
-![image](https://github.com/user-attachments/assets/f892c6b4-e9a6-440d-8006-ab2bd3b139bb)
-
-## Wazuh
-
-Using an Ubuntu Server, install Wazuh using  
-`curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a`
-Login using provided password and access the web page to confirm installation.  
-![image](https://github.com/user-attachments/assets/c06bbbb7-5c4c-449e-906d-e4e9433d2368)
-
-Deploying Wazuh agents on Linux endpoints.
-
-Add the Wazuh repository
-
-1. Install the GPG key: `curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg`
-2. Add the repository:`echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list`
-3. Update the package information:`apt-get update`
-  
-![image](https://github.com/user-attachments/assets/5de7517b-fe19-48b6-90f3-930927fb27b8)
+## Troubleshooting
 
 
-Deploy a Wazuh agent on endpoint.  
-`WAZUH_MANAGER="<IP>" apt-get install wazuh-agent`
 
-Enable and start the Wazuh agent service.  
-`systemctl daemon-reload`  
-`systemctl enable wazuh-agent`  
-`systemctl start wazuh-agent`  
-![image](https://github.com/user-attachments/assets/b66f974d-5034-428f-aa6e-ed8bc076a87d)
+### Test 1
 
-Confirm agent status on Wazuh web interface.
-![image](https://github.com/user-attachments/assets/8f4b238e-069f-4a4c-bf00-8596c7c8dbde)
+### Test 2 
 
-Enable the Wazuh Docker listener to capture Docker events and forward them to the Wazuh server.    
-`apt-get update && apt-get install python3`  
-`apt-get install python3-pip`  
-`pip3 install docker==4.2.0 urllib3==1.26.18`
+## Setting up Proxmox 
 
-Add the following configuration to the Wazuh agent configuration file /var/ossec/etc/ossec.conf to enable the Docker listener: 
+### Storage
 
-```
-<wodle name="docker-listener">
-  <disabled>no</disabled>
-</wodle>
-```
+<img width="1058" height="522" alt="image" src="https://github.com/user-attachments/assets/e62b911b-c1ad-4182-8e61-5320ea46fe13" />
 
-Restart the Wazuh agent to apply the changes: `systemctl restart wazuh-agent`
+Set up SSD for VM (LVM-Thin)
+pve > LVM-Thin > Create: Thinpool 
 
-Enable Wazuh Docker listener on dashboard  
-![image](https://github.com/user-attachments/assets/1f5bc3e4-1011-4bc5-99aa-2c9d34e74df6)
+<img width="1065" height="525" alt="image" src="https://github.com/user-attachments/assets/df71573f-d17f-4f53-856b-bcf31ba9213d" />
 
-Wazuh pfsense agent
+Set up HDD for Other storage (ZFS)
+pve > LVM-Thin > Create: ZFS
 
-Enable SSH in Settings > Advanced > Secure Shell > Enable Secure Shell
+### Create a ZFS Dataset and Add it as a "Directory" Storage
 
-## Nessus Scan
+<img width="242" height="175" alt="image" src="https://github.com/user-attachments/assets/4f258659-80c1-4954-8d3d-6b9e8f65d0ef" />
 
-Performing basic Host Discovery on Metasploitable2
+Promox shell 
+For ISOs: `zfs create zfs-archive/iso-files`
+For Container Templates: `zfs create zfs-archive/templates`
+For Backups: `create zfs-archive/backups`
 
-![image](https://github.com/user-attachments/assets/740a6a64-bc91-46ee-8aea-b104a789d3cf)  
-![image](https://github.com/user-attachments/assets/f49fa3ef-6daf-4090-8282-df16ba22fe09)
-![image](https://github.com/user-attachments/assets/24806e03-e0a3-462b-9289-1021d3d30b0d)
+For each - Datacenter > Storage > Add > Directory > (ID) > (Directory - /zfs-archive/iso-files) > (Content).
 
+### Network
 
+Add Linux bridge 
+
+pve > Network > Create > Linux Bridge > Apply Configuration
+<img width="482" height="200" alt="image" src="https://github.com/user-attachments/assets/49e72cb2-65f2-4d39-8831-1284e881c75a" />
+
+ 
+## pfSense
+
+Create VM > Default settings
+
+Hardware > Add > Network Device > vmbr2
+<img width="477" height="211" alt="image" src="https://github.com/user-attachments/assets/1997d047-58b9-49dc-ad19-119178048552" />
+
+Start > Console > Confirm/Next all > Reboot > N (Should VLANs be set up now?) > vtnet0 (WAN interface) > vtnet1 (LAN interface)
+<img width="318" height="62" alt="image" src="https://github.com/user-attachments/assets/f695e771-602b-4eeb-9e6b-b38cc2bd6954" />
+
+2 (Set interface(s) IP address) > 2 (LAN) > N (LAN DHCP) > 10.10.1.254 (LAN IPv4) > 24 (subnet) > Enter (none) > N (IPv6) > Enter (none) > Y (Enable DHCP) > 10.10.1.50 - 10.10.1.100 > N (HTTP webConfigure protocol
 
 
