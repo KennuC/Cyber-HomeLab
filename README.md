@@ -90,5 +90,22 @@ Guided - use entire disk > All files in one partition > Yes Partition Disk > Yes
 
 Remove ISO
 
+## pfSense Firewall Rules
+
+Access pfSense @ 10.10.1.254 on web
+
+### Networks
+
+Interfaces > Assigments > VLANs
+
+Add > vtnet1 - lan > VLAN 10 > Repeat for 20 & 30
+<img width="1285" height="392" alt="image" src="https://github.com/user-attachments/assets/9e0d542a-4112-44cc-8703-ad4108206908" />
+
+Interfaces > Assigments > Interface Assignments > Add VLAN 10, 20 & 30 > Save
+<img width="1291" height="499" alt="image" src="https://github.com/user-attachments/assets/9f659fd7-2868-40d5-8d4d-2932d74b8f47" />
+
+
+
+
 
 
