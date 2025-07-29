@@ -76,9 +76,19 @@ Create VM > Default settings
 Hardware > Add > Network Device > vmbr2
 <img width="477" height="211" alt="image" src="https://github.com/user-attachments/assets/1997d047-58b9-49dc-ad19-119178048552" />
 
-Start > Console > Confirm/Next all > Reboot > N (Should VLANs be set up now?) > vtnet0 (WAN interface) > vtnet1 (LAN interface)
+Start > Console > Confirm/Next all > Reboot > N (Should VLANs be set up now?) > vtnet0 (WAN interface) > vtnet1 (LAN interface
+
 <img width="318" height="62" alt="image" src="https://github.com/user-attachments/assets/f695e771-602b-4eeb-9e6b-b38cc2bd6954" />
 
-2 (Set interface(s) IP address) > 2 (LAN) > N (LAN DHCP) > 10.10.1.254 (LAN IPv4) > 24 (subnet) > Enter (none) > N (IPv6) > Enter (none) > Y (Enable DHCP) > 10.10.1.50 - 10.10.1.100 > N (HTTP webConfigure protocol
+2 (Set interface(s) IP address) > 2 (LAN) > N (LAN DHCP) > 10.10.1.254 (LAN IPv4) > 24 (subnet) > Enter (none) > N (IPv6) > Enter (none) > Y (Enable DHCP) > 10.10.1.50 - 10.10.1.100 > N (HTTP webConfigure protocol)
+
+## Kali Build
+
+Create VM > Storage: ssd-vm (120 GB) > 2 Cores > 8192 MiB > vmbr2 network bridge
+
+Guided - use entire disk > All files in one partition > Yes Partition Disk > Yes GRUB boot loader > /dev/sda
+
+Remove ISO
+
 
 
